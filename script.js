@@ -3,22 +3,40 @@ const tableBody = document.getElementById('bookTable').querySelector('tbody');
 
 const myLibrary = [];
 
-function Book(title, author, pages, read, id) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.id = id;
-}
+// function Book(title, author, pages, read, id) {
+//     this.title = title;
+//     this.author = author;
+//     this.pages = pages;
+//     this.read = read;
+//     this.id = id;
+// }
 
-Book.prototype.flipRead = function () {
-    if (this.read === false) {
-        this.read = true
-    } else {
-        this.read = false
+class Book {
+    constructor(title, author, pages, read, id) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.id = id;
     }
-    displayTable(); //update table
-}
+    flipRead() {
+        if (this.read === false) {
+            this.read = true
+        } else {
+            this.read = false
+        }
+        displayTable(); //update table
+    }
+};
+
+// Book.prototype.flipRead = function () {
+//     if (this.read === false) {
+//         this.read = true
+//     } else {
+//         this.read = false
+//     }
+//     displayTable(); //update table
+// }
 
 function addBookToLibrary(title, author, pages, read) {
     const id = crypto.randomUUID();
@@ -63,14 +81,14 @@ function displayTable() {
 
         const deleteBook = document.createElement("button");
         deleteBook.textContent = "Remove";
-        deleteBook.addEventListener("click", function(){
+        deleteBook.addEventListener("click", function () {
             deleteBookFunc(book.id);
         });
         row.appendChild(deleteBook);
 
         const readToggle = document.createElement("button");
         readToggle.textContent = "changeRead";
-        readToggle.addEventListener("click", function() {
+        readToggle.addEventListener("click", function () {
             book.flipRead();
         });
         console.log(book + ".flipRead()");
@@ -88,27 +106,3 @@ function deleteBookFunc(PassedId) {
 }
 
 displayTable(); // display table on pageload
-
-
-// old method without prototype
-// function readBook(PassedId, boolean) {
-//     const findBookIndex = myLibrary.findIndex(book => book.id === PassedId);//assign index to const where first id matches
-//     const readToggle = readOpposite(boolean);
-//     const changeRead = myLibrary[findBookIndex].read = readToggle;
-//     displayTable(); //update table
-// }
-
-// function readOpposite(boolean){
-//     if (boolean === true)  {
-//         return false
-//     } else {
-//         return true
-//     }
-// }
-
-
-
-// addBookToLibrary("Harry", "JK", 12, "Read");
-
-
-
